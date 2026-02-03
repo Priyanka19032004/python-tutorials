@@ -45,9 +45,9 @@ def delete_fruit():
 
     if name in fruit_stock:
         del fruit_stock[name]
-        print("✅ Fruit deleted successfully!")
+        print("Fruit deleted successfully!")
     else:
-        print("❌ Fruit not found!")
+        print("Fruit not found!")
     
 while True:
     print("1. show_fruit:")
