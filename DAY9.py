@@ -1,45 +1,107 @@
 import pandas as pd
-fruit_stock = {
-    "Apple": {"price": 20, "quantity": 30},
-    "Orange": {"price": 40, "quantity": 50}
-}
+import os
+
+FILE_NAME = "fruits.csv"
+
+def create_csv():
+    if not os.path.exists(FILE_NAME):
+        df = pd.DataFrame(columns=["Fruit", "Price", "Quantity"])
+        df.to_csv(FILE_NAME, index=False)
 
 def show_fruit():
-    print("\nFRUIT INVENTORY")
-    print("-------------------")
-    for fruit in fruit_stock:
-        print("Fruit:", fruit)
-        print("Price:", fruit_stock[fruit]["price"])
-        print("Quantity:", fruit_stock[fruit]["quantity"])
-        print("-------------------")
+    df = pd.read_csv(FILE_NAME)
 
-def calculate_total_value():
-    total_value = 0
-    for fruit in fruit_stock:
-        price = fruit_stock[fruit]["price"]
-        quantity = fruit_stock[fruit]["quantity"]
-        value = price * quantity
-        total_value = total_value + value
-
-    print("\nTotal inventory value:", total_value)
-
-while True:
-    print("\nFRUIT INVENTORY SYSTEM")
-    print("1. Show Fruits")
-    print("2. Add Fruit")
-    print("3. Update Fruit")
-    print("4. Delete Fruit")
-    print("5. Exit")
-    print("6. Total Inventory Value")
-
-    choice = input("Enter your choice: ")
-
-    if choice == "1":
-        show_fruit()
-    elif choice == "6":
-        calculate_total_value()
-    elif choice == "5":
-        print("Exit")
-        break
+    if df.empty:
+        print("No fruits available!")
     else:
-        print("Option not implemented yet")
+        print("\n🍓 Fruits Stock:")
+        print(df)
+    print("----------------------")
+
+def add_fruit():
+    name = input("Enter fruit name: ").strip()
+    if name == "":
+        print("Fruit name should not be empty!")
+        return
+
+    try:
+        price = int(input("Enter fruit price: "))
+        quantity = int(input("Enter fruit quantity: "))
+    except:
+        print("Price and quantity must be numbers!")
+        return
+
+    df = pd.read_csv(FILE_NAME)
+
+    new_row = pd.DataFrame(
+        {"Fruit": [name], "Price": [price], "Quantity": [quantity]}
+    )
+
+    df = pd.concat([df, new_row], ignore_index=True)
+    df.to_csv(FILE_NAME, index=False)
+
+    print("Fruit added successfully!")
+    print("----------------------")
+
+
+def update_quantity():
+    name = input("Enter fruit name to update: ")
+
+    df = pd.read_csv(FILE_NAME)
+
+    if name in df["Fruit"].values:
+        try:
+            new_quantity = int(input("Enter new quantity: "))
+        except:
+            print("Quantity must be a number!")
+            return
+
+        df.loc[df["Fruit"] == name, "Quantity"] = new_quantity
+        df.to_csv(FILE_NAME, index=False)
+
+        print("Quantity updated successfully!")
+    else:
+        print("Fruit not found!")
+    print("----------------------")
+
+def delete_fruit():
+    name = input("Enter fruit name to delete: ")
+
+    df = pd.read_csv(FILE_NAME)
+
+    if name in df["Fruit"].values:
+        df = df[df["Fruit"] != name]
+        df.to_csv(FILE_NAME, index=False)
+        print("Fruit deleted successfully!")
+    else:
+        print("Fruit not found!")
+    print("----------------------")
+
+def menu():
+    create_csv()
+
+    while True:
+        print("\n--- Fruits Inventory System (CSV + Pandas) ---")
+        print("1. Show Fruits")
+        print("2. Add Fruit")
+        print("3. Update Quantity")
+        print("4. Delete Fruit")
+        print("5. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            show_fruit()
+        elif choice == "2":
+            add_fruit()
+        elif choice == "3":
+            update_quantity()
+        elif choice == "4":
+            delete_fruit()
+        elif choice == "5":
+            print("Exiting program...")
+            break
+        else:
+            print("Invalid choice!")
+
+menu()
