@@ -14,7 +14,7 @@ def show_fruit():
     if df.empty:
         print("No fruits available!")
     else:
-        print("\n🍓 Fruits Stock:")
+        print("\nFruits Stock:")
         print(df)
     print("----------------------")
 
