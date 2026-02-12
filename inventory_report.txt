@@ -1,15 +1,14 @@
 FRUITS INVENTORY REPORT
 ========================
-Report Generated On: 10-02-2026 20:03:00
+Generated on: 12-02-2026 11:48:57
 
-Inventory Data:
-Fruit  Price  Quantity  Stock Value
-apple     20        30          600
+ Fruit  Price  Quantity  Stock Value
+ apple     20        30          600
+ Apple     20        30          600
+Orange     30        40         1200
 
-Summary:
-------------------------
-Total Different Fruits : 1
-Total Quantity         : 30
-Total Inventory Value  : 600
-Most Expensive Fruit   : apple
-Lowest Stock Fruit     : apple
+SUMMARY
+-----------------
+Total Quantity: 100
+Total Inventory Value: 2400
+Top Revenue Fruit: Orange
