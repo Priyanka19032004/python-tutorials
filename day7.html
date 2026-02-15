@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Fruit Stock Manager</h2>
+
+<button onclick="showFruit()">1. Show Fruits</button>
+<button onclick="addFruit()">2. Add Fruit</button>
+<button onclick="updateFruit()">3. Update Quantity</button>
+<button onclick="deleteFruit()">4. Delete Fruit</button>
+
+<p id="output"></p>
+
+<script>
+var fruit_stock = {
+    "Apple": {price: 20, quantity: 30},
+    "Orange": {price: 30, quantity: 40},
+    "Grapes": {price: 40, quantity: 50}
+};
+
+function showFruit() {
+    var text = "";
+    for (var fruit in fruit_stock) {
+        text += "Fruit: " + fruit + "<br>";
+        text += "Price: " + fruit_stock[fruit].price + "<br>";
+        text += "Quantity: " + fruit_stock[fruit].quantity + "<br>";
+        text += "---------------------<br>";
+    }
+    document.getElementById("output").innerHTML = text;
+}
+
+function addFruit() {
+    var name = prompt("Enter fruit name:");
+    if (name == "") {
+        alert("Fruit name cannot be empty!");
+        return;
+    }
+
+    var price = prompt("Enter price:");
+    var quantity = prompt("Enter quantity:");
+
+    if (isNaN(price) || isNaN(quantity)) {
+        alert("Price and quantity must be numbers!");
+        return;
+    }
+
+    fruit_stock[name] = {
+        price: parseInt(price),
+        quantity: parseInt(quantity)
+    };
+
+    alert("Fruit added successfully!");
+}
+
+function updateFruit() {
+    var name = prompt("Enter fruit name:");
+
+    if (fruit_stock[name]) {
+        var new_quantity = prompt("Enter new quantity:");
+
+        if (isNaN(new_quantity)) {
+            alert("Quantity must be a number!");
+            return;
+        }
+
+        fruit_stock[name].quantity = parseInt(new_quantity);
+        alert("Quantity updated!");
+    } else {
+        alert("Fruit not found!");
+    }
+}
+
+function deleteFruit() {
+    var name = prompt("Enter fruit name to delete:");
+
+    if (fruit_stock[name]) {
+        delete fruit_stock[name];
+        alert("Fruit deleted successfully!");
+    } else {
+        alert("Fruit not found!");
+    }
+}
+</script>
+
+</body>
+</html>
